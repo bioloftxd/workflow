@@ -1,0 +1,15 @@
+1- Acessar Sistema	-	2
+2- Manter Departamento	-	1
+3- Manter Mensagens	-	1
+4- Manter Processos	-	1
+5- Manter Usuário	-	2
+6- Manter workflow	-	2
+
+Equipe 1 
+Alison
+Lucas Oliveira
+Giovani
+
+Equipe 2
+Lucas de Oliveira
+Robson
