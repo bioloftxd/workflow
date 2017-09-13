@@ -12,6 +12,7 @@ class Etapa extends Model
     	'descricao',
     	'obsevacao',
     	'verificacao',
-    	'desativado'
+    	'desativado',
+    	'id_anexo'
     ];
 }
