@@ -8,7 +8,7 @@ class Categoria extends Model
 {
  protected $fillable = [
     	'id',
-    	'nome',    	
+    	'nome',	    	
     	'desativado'
     ];
 }
