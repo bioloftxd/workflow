@@ -12,8 +12,7 @@ class Processo extends Model
     	'descricao',
     	'obsevacao',
     	'desativado',
-    	'id_categoria',
-    	'id_etapa',
-    	'id_usuario'
+    	'categoria_id',
+    	'usuario_id'
     ];
 }

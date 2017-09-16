@@ -8,11 +8,11 @@ class Etapa extends Model
 {
      protected $fillable = [
     	'id',
+    	'processo_id'
     	'nome',
     	'descricao',
     	'obsevacao',
     	'verificacao',
-    	'desativado',
-    	'id_anexo'
+    	'desativado'
     ];
 }
