@@ -14,7 +14,15 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
+/*
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');*/
+//Route::get('/processos', 'ProcessosController');
+Route::get('/processos/', function () {
+    return view('processos.index');
+});
+
+Route::get('/processos/{create}', function () {
+    return view('processos.create');
+});
