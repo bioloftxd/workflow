@@ -8,9 +8,16 @@ class Anexo extends Model
 {
  protected $fillable = [
     	'id',
-    	'etapa_id',
+    	'etapas_id',
     	'nome',
     	'caminho',
     	'desativado'
     ];
+
+    protected $table = "anexos";
+
+
+    public function etapa(){
+        return $this->hasOne(Etapa::class,'id','etapas_id');
+    }
 }

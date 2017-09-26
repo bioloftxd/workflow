@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Processos;
+use App\Processo;
 
 use Illuminate\Http\Request;
 
@@ -12,9 +12,11 @@ class ProcessoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
-        return view('processos.index');
+       // $processos = new Processos::all()->toArray();
+        return view('processos.index','processos');
     }
 
     /**
@@ -26,6 +28,7 @@ class ProcessoController extends Controller
     {
         return view('processos.create');
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -46,7 +49,7 @@ class ProcessoController extends Controller
      */
     public function show($id)
     {
-        //
+        // $processos = new Processos::find($id);
     }
 
     /**

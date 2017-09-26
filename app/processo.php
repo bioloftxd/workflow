@@ -12,7 +12,19 @@ class Processo extends Model
     	'descricao',
     	'obsevacao',
     	'desativado',
-    	'categoria_id',
-    	'usuario_id'
+    	'categorias_id',
+    	'usuarios_id'
     ];
+
+
+    protected $table = "processos";
+
+    
+    public function categoria(){
+        return $this->hasOne(Categoria::class,'id','categorias_id');
+    }
+
+     public function usuario(){
+        return $this->hasOne(Usuario::class,'id','usuarios_id');
+    }
 }

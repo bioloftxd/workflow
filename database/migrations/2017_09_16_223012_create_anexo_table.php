@@ -15,6 +15,9 @@ class CreateAnexoTable extends Migration
     {
         Schema::create('anexos', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('nome');
+            $table->string('caminho');
+            $table->boolean('desativado')->default('0');
             $table->timestamps();
         });
     }

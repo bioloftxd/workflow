@@ -26,11 +26,11 @@
           <br><br>
     
     @yield('content')
-    
+   
 
 
    
-
+ @include('layouts.footer')
     </div>
 
   </body>

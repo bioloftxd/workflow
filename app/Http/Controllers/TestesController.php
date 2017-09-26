@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class EtapasController extends Controller
+class TestesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,7 +23,7 @@ class EtapasController extends Controller
      */
     public function create()
     {
-        return view('processos.create');
+        //
     }
 
     /**

@@ -11,4 +11,6 @@ class Categoria extends Model
     	'nome',	    	
     	'desativado'
     ];
+
+    protected $table = "categorias";
 }

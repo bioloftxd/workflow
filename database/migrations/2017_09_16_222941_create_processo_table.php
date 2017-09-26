@@ -15,6 +15,13 @@ class CreateProcessoTable extends Migration
     {
         Schema::create('processos', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('categorias_id')->unsigned();
+            $table->foreing('categorias_id')->references('id')->on('categorias');
+            $table->integer('usuarios_id')->unsigned();
+            $table->foreing('usuarios_id')->references('id')->on("usuarios");
+            $table->string('nome');
+            $table->text('descricao');
+            $table->boolean('desativado')->default('0');
             $table->timestamps();
         });
     }
