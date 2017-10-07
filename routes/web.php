@@ -13,7 +13,7 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index'); 
+Route::get('/', 'HomeController@index');
 
 Route::group(['prefix' => 'categorias', 'middleware' => 'auth'], function () {
     Route::resource('/', 'CategoriasController');
@@ -26,4 +26,3 @@ Route::group(['prefix' => 'etapas', 'middleware' => 'auth'], function () {
 Route::group(['prefix' => 'processos', 'middleware' => 'auth'], function () {
     Route::resource('/', 'ProcessosController');
 });
-
