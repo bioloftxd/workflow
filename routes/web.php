@@ -13,7 +13,7 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index'); 
 
 Route::group(['prefix' => 'categorias', 'middleware' => 'auth'], function () {
     Route::resource('/', 'CategoriasController');

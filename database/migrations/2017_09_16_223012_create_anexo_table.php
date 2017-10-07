@@ -17,6 +17,8 @@ class CreateAnexoTable extends Migration
             $table->increments('id');
             $table->string('nome');
             $table->string('caminho');
+            $table->integer('etapa_id')->unsigned();
+            $table->foreign('etapa_id')->references('id')->on('etapas');
             $table->boolean('desativado')->default('0');
             $table->timestamps();
         });
