@@ -24,10 +24,19 @@
       </label>
     </div>
   </div>
-  <button type="submit" class="btn btn-primary">add Etapa</button>
+  <div class="row">
+    <div class="col-md-8">
+      <button type="submit" class="btn btn-primary">Nova etapa</button>
+    </div>
+    <div class="col-md-4" >
+       <button type="submit" class="btn btn-primary" style="float: right">Finalizar Processo</button>
+    </div> 
+  </div>
+  <fieldset>
+    <legend>Adicionar documentos modelo</legend>
+    <div class="form-group">
+    <input type="file" class="form-control-file" id="file" multiple>
+  </div>
+  </fieldset>
 </form>
-
-
-
-
 @endsection

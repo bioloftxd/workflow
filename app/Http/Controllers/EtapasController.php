@@ -23,7 +23,7 @@ class EtapasController extends Controller
      */
     public function create()
     {
-        return view('processos.create');
+        return view('etapas.create');
     }
 
     /**
