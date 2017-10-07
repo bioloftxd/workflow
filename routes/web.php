@@ -10,32 +10,20 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-/*
-Route::get('/', function () {
-    return view('welcome');
-});
-/
-Auth::routes();*/
 
-Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes();
 
+Route::get('/', 'HomeController@index');
 
-
-//Route::get('/processos', 'ProcessosController@index');
-
-
-
-/*Route::get('/processos/', function () {
-    return view('processos.index');
+Route::group(['prefix' => 'categorias', 'middleware' => 'auth'], function () {
+    Route::resource('/', 'CategoriasController');
 });
 
-Route::get('/processos/{create}', function () {
-    return view('processos.create');
+Route::group(['prefix' => 'etapas', 'middleware' => 'auth'], function () {
+    Route::resource('/', 'EtapasController');
 });
 
-Route::get('/etapas/{create}', function () {
-    return view('etapas.create');
+Route::group(['prefix' => 'processos', 'middleware' => 'auth'], function () {
+    Route::resource('/', 'ProcessosController');
 });
 
-
-Route::resource('Teste','TestesController');*/

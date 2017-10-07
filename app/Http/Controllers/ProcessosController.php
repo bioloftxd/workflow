@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Processo;
 
 use Illuminate\Http\Request;
 
-class ProcessoController extends Controller
+class ProcessosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +17,7 @@ class ProcessoController extends Controller
     public function index()
     {
        // $processos = new Processos::all()->toArray();
-        return view('processos.index','processos');
+        return view('processos.index');
     }
 
     /**
