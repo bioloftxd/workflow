@@ -17,15 +17,15 @@ Route::get('/', function () {
 /
 Auth::routes();*/
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
 
 
-//Route::get('/processos', 'ProcessosController@index');
+//Route::resource('processo', 'ProcessosController');
 
 
 
-/*Route::get('/processos/', function () {
+Route::get('/processos/', function () {
     return view('processos.index');
 });
 
@@ -38,4 +38,4 @@ Route::get('/etapas/{create}', function () {
 });
 
 
-Route::resource('Teste','TestesController');*/
+//Route::resource('Teste','TestesController');
