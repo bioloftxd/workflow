@@ -35,6 +35,6 @@
 
     </form>
 
-@endsection    
+@endsection
 
 
