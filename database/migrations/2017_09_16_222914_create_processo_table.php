@@ -17,8 +17,8 @@ class CreateProcessoTable extends Migration
             $table->increments('id');
             $table->integer('categorias_id')->unsigned();
             $table->foreign('categorias_id')->references('id')->on('categorias');
-            $table->integer('usuarios_id')->unsigned();
-            $table->foreign('usuarios_id')->references('id')->on("usuarios");
+            $table->integer('users_id')->unsigned();
+            $table->foreign('users_id')->references('id')->on("users");
             $table->string('nome');
             $table->text('descricao');
             $table->boolean('desativado')->default('0');
