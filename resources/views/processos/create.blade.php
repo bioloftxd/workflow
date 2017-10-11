@@ -4,6 +4,7 @@
 
 
     <form>
+        {{csrf_field()}}
         <div class="form-row">
             <div class="form-group col-lg-8">
                 <label for="nome" class="col-form-label">Nome</label>

@@ -23,6 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('processos.create');
+        return redirect()->action("ProcessosController@index");
     }
 }
