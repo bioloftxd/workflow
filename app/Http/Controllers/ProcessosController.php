@@ -16,8 +16,8 @@ class ProcessosController extends Controller
 
     public function index()
     {
-        $processos = Processo::all();
-        return view('processos/index')->with('processos', $processos);
+        $processos = Processo::all()->where("desativado", "!=", 1);
+        return view('processos.index', ["processos" => $processos, "mensagem" => null]);
     }
 
     /**
@@ -27,7 +27,7 @@ class ProcessosController extends Controller
      */
     public function create()
     {
-        return view('processos.create');
+        return view('processos.create', ["mensagem" => null]);
     }
 
 
@@ -39,7 +39,28 @@ class ProcessosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $processo = new Processo();
+
+        $processo->nome = ($request->nome) ? $request->nome : "Sem nome.";
+        $processo->descricao = ($request->descricao) ? $request->descricao : "Sem descrições.";
+        $processo->observacao = ($request->observacao) ? $request->observacao : "Sem observações";
+        $processo->categoria_id = ($request->categoria_id) ? $request->categoria_id : 0;
+        $processo->usuario_id = ($request->usuario_id) ? $request->usuario_id : 0;
+
+        if ($request->nome == null) {
+            return view("processos.index", ["mensagem" => "Nome do processo obrigatório!", "processo" => $processo]);
+        }
+
+        if ($request->descricao == null) {
+            return view("processos.index", ["mensagem" => "Descrição do processo obrigatório!", "processo" => $processo]);
+        }
+
+        $processo->save();
+
+        $processos = Processo::all()->where("desativado", "!=", 1);
+
+        return view("processos.index", ["mensagem" => "Processo cadastrado com sucesso!", "processos" => $processos]);
+
     }
 
     /**
@@ -50,7 +71,9 @@ class ProcessosController extends Controller
      */
     public function show($id)
     {
-        // $processos = new Processos::find($id);
+        $processo = Processos::find($id);
+
+        return view("processos.show", ["processo" => $processo, "mensagem" => null]);
     }
 
     /**
@@ -61,7 +84,9 @@ class ProcessosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $processo = Processo::find($id);
+
+        return view("processos.edit", ["processo" => $processo, "mensagem" => null]);
     }
 
     /**
@@ -73,7 +98,27 @@ class ProcessosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $processo = Processo::find($id);
+
+        $processo->nome = ($request->nome) ? $request->nome : $processo->nome;
+        $processo->descricao = ($request->descricao) ? $request->descricao : $processo->descricao;
+        $processo->observacao = ($request->observacao) ? $request->observacao : $processo->observacao;
+        $processo->categoria_id = ($request->categoria_id) ? $request->categoria_id : $processo->categoria_id;
+        $processo->usuario_id = ($request->usuario_id) ? $request->usuario_id : $processo->usuario_id;
+
+        if ($request->nome == null) {
+            return view("processos.edit", ["mensagem" => "Nome do processo obrigatório!", "processo" => $processo]);
+        }
+
+        if ($request->descricao == null) {
+            return view("processos.edit", ["mensagem" => "Descrição do processo obrigatório!", "processo" => $processo]);
+        }
+
+        $processo->save();
+
+        $processos = Processo::all()->where("desativado", "!=", 1);
+
+        return view("processos.index", ["mensagem" => "Alterações salvas!", "processos" => $processos]);
     }
 
     /**
@@ -84,6 +129,13 @@ class ProcessosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $processo = Processo::find($id);
+
+        $processo->desativado = 1;
+        $processo->save();
+
+        $processos = Processo::all()->where("desativado", "!=", 1);
+
+        return view("processos.index", ["mensagem" => "Processo removido!", "processos" => $processos]);
     }
 }

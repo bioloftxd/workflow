@@ -2,8 +2,6 @@
 
 @section('content')
 
-    {{dd($processos)}}
-
     <div id="accordion" role="tablist">
         <div class="card">
             <div class="card-header" role="tab" id="headingOne">

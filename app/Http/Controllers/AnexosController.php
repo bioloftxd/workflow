@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Anexo;
 use Illuminate\Http\Request;
 
 class AnexosController extends Controller
@@ -13,7 +14,9 @@ class AnexosController extends Controller
      */
     public function index()
     {
-        //
+        $anexos = Anexo::all()->where("desativado", "!=", 1);
+
+        return view("anexos.index", ["mensagem" => null, "anexos" => $anexos]);
     }
 
     /**
@@ -29,7 +32,7 @@ class AnexosController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -40,7 +43,7 @@ class AnexosController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -51,7 +54,7 @@ class AnexosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -62,8 +65,8 @@ class AnexosController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -74,7 +77,7 @@ class AnexosController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Categoria;
 use Illuminate\Http\Request;
 
 class CategoriasController extends Controller
@@ -13,7 +14,8 @@ class CategoriasController extends Controller
      */
     public function index()
     {
-        return view("categorias.index");
+        $categorias = Categoria::all()->where("desativado", "!=", 1);
+        return view("categorias.index", ["categorias" => $categorias, "mensagem" => null]);
     }
 
     /**
@@ -23,7 +25,7 @@ class CategoriasController extends Controller
      */
     public function create()
     {
-        return view("categorias.create");
+        return view("categorias.create", ["mensagem" => null]);
     }
 
     /**
@@ -34,7 +36,14 @@ class CategoriasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $categoria = new Categoria();
+        $categoria->nome = ($request->nome) ? $request->nome : "Sem nome";
+        $categoria->save();
+
+        $mensagem = "Categoria Cadastrada!";
+
+        return $mensagem;
+
     }
 
     /**
@@ -45,7 +54,8 @@ class CategoriasController extends Controller
      */
     public function show($id)
     {
-        //
+        $categoria = Categoria::find($id);
+        return $categoria;
     }
 
     /**
@@ -56,7 +66,9 @@ class CategoriasController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categoria = Categoria::find($id);
+
+        return view("categorias.edit", ["categorias" => $categoria, "mensagem" => null]);
     }
 
     /**
@@ -68,7 +80,15 @@ class CategoriasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $categoria = Categoria::find($id);
+
+        $categoria->nome = ($request->nome) ? $request->nome : $categoria->nome;
+        $categoria->desativado = ($request->desativado) ? $request->desativado : $categoria->desativado;
+        $categoria->save();
+
+        $mensagem = "Categoria atualizada!";
+
+        return $mensagem;
     }
 
     /**
@@ -79,6 +99,12 @@ class CategoriasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $categoria = Categoria::find($id);
+        $categoria->desativado = 1;
+        $categoria->save();
+
+        $mensagem = "Categoria Removida!";
+
+        return $mensagem;
     }
 }
