@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Etapa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EtapasController extends Controller
 {
@@ -15,7 +16,7 @@ class EtapasController extends Controller
     public function index()
     {
         $etapas = Etapa::all()->where("desativado", "!=", 1);
-        return (view('etapas.index', ["mensagem" => null, "etapas" => $etapas]));
+        return view('etapas.index', ["etapas" => $etapas]);
     }
 
     /**
@@ -25,7 +26,7 @@ class EtapasController extends Controller
      */
     public function create()
     {
-        return view('etapas.create', ["mensagem" => null]);
+        return view('etapas.create');
     }
 
     /**
@@ -37,27 +38,26 @@ class EtapasController extends Controller
     public function store(Request $request)
     {
         $etapa = new Etapa();
-
         $etapa->processos_id = ($request->processos_id) ? $request->processos_id : 0;
         $etapa->nome = ($request->nome) ? $request->nome : "Sem nome.";
         $etapa->descricao = ($request->descricao) ? $request->descricao : "Sem descrição.";
         $etapa->observacao = ($request->observacao) ? $request->observacao : "Sem observações.";
         $etapa->verificacao = ($request->verificacao == 0) ? 0 : 1;
-
         if ($request->processos_id == null) {
             return view("etapas.create", ["mensagem" => "Número do processo inválido!", "etapa" => $etapa]);
         }
-
         if ($request->nome == null) {
             return view("etapas.create", ["mensagem" => "Nome da etapa obrigatório!", "etapa" => $etapa]);
         }
-
-        $etapa->save();
-
-        $mensagem = "Etapa salva!";
-
-        return $mensagem;
-
+        DB::beginTransaction();
+        try {
+            $etapa->save();
+            DB::commit();
+            return 1;
+        } catch (\Throwable $error) {
+            DB::rollback();
+            return $error->errorInfo[1];
+        }
     }
 
     /**
@@ -69,8 +69,7 @@ class EtapasController extends Controller
     public function show($id)
     {
         $etapa = Etapa::find($id);
-
-        return view("etapa.show", ["mensagem" => null, "etapa" => $etapa]);
+        return view("etapa.show", ["etapa" => $etapa]);
     }
 
     /**
@@ -82,8 +81,7 @@ class EtapasController extends Controller
     public function edit($id)
     {
         $etapa = Etapa::find($id);
-
-        return view("etapa.edit", ["mensagem" => null, "etapa" => $etapa]);
+        return view("etapa.edit", ["etapa" => $etapa]);
     }
 
     /**
@@ -96,23 +94,27 @@ class EtapasController extends Controller
     public function update(Request $request, $id)
     {
         $etapa = Etapa::find($id);
-
         $etapa->processos_id = ($request->processos_id) ? $request->processos_id : 0;
         $etapa->nome = ($request->nome) ? $request->nome : "Sem nome.";
         $etapa->descricao = ($request->descricao) ? $request->descricao : "Sem descrição.";
         $etapa->observacao = ($request->observacao) ? $request->observacao : "Sem observações.";
         $etapa->verificacao = ($request->verificacao == 0) ? 0 : 1;
-
         if ($request->processos_id == null) {
             return view("etapas.edit", ["mensagem" => "Número do processo inválido!", "etapa" => $etapa]);
         }
         if ($request->nome == null) {
             return view("etapas.edit", ["mensagem" => "Nome da etapa obrigatório!", "etapa" => $etapa]);
         }
-
-        $etapa->save();
-        $etapas = Etapa::all()->where("desativado", "!=", 1);
-        return view("etapas.index", ["mensagem" => "Alterações salvas!", "etapas" => $etapas]);
+        DB::beginTransaction();
+        try {
+            $etapa->save();
+            DB::commit();
+            $etapas = Etapa::all()->where("desativado", "!=", 1);
+            return view("etapas.index", ["mensagem" => "Alterações salvas!", "etapas" => $etapas]);
+        } catch (\Throwable $error) {
+            DB::rollback();
+            return $error->errorInfo[1];
+        }
     }
 
     /**
@@ -125,8 +127,15 @@ class EtapasController extends Controller
     {
         $etapa = Etapa::find($id);
         $etapa->desativado = 1;
-        $etapa->save();
-        $etapas = Etapa::all()->where("desativado", "!=", 1);
-        return view("etapas.index", ["mensagem" => "Etapa removida!", "etapas" => $etapas]);
+        DB::beginTransaction();
+        try {
+            $etapa->save();
+            DB::commit();
+            $etapas = Etapa::all()->where("desativado", "!=", 1);
+            return view("etapas.index", ["mensagem" => "Etapa removida!", "etapas" => $etapas]);
+        } catch (\Throwable $error) {
+            DB::rollback();
+            return $error->errorInfo[1];
+        }
     }
 }

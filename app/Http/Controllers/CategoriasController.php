@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Categoria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoriasController extends Controller
 {
@@ -15,7 +16,7 @@ class CategoriasController extends Controller
     public function index()
     {
         $categorias = Categoria::all()->where("desativado", "!=", 1);
-        return view("categorias.index", ["categorias" => $categorias, "mensagem" => null]);
+        return view("categorias.index", ["categorias" => $categorias]);
     }
 
     /**
@@ -25,7 +26,7 @@ class CategoriasController extends Controller
      */
     public function create()
     {
-        return view("categorias.create", ["mensagem" => null]);
+        return view("categorias.create");
     }
 
     /**
@@ -38,12 +39,15 @@ class CategoriasController extends Controller
     {
         $categoria = new Categoria();
         $categoria->nome = ($request->nome) ? $request->nome : "Sem nome";
-        $categoria->save();
-
-        $mensagem = "Categoria Cadastrada!";
-
-        return $mensagem;
-
+        DB::beginTransaction();
+        try {
+            $categoria->save();
+            DB::commit();
+            return 1;
+        } catch (\Throwable $error) {
+            DB::rollback();
+            return $error->errorInfo[1];
+        }
     }
 
     /**
@@ -67,8 +71,7 @@ class CategoriasController extends Controller
     public function edit($id)
     {
         $categoria = Categoria::find($id);
-
-        return view("categorias.edit", ["categorias" => $categoria, "mensagem" => null]);
+        return view("categorias.edit", ["categorias" => $categoria]);
     }
 
     /**
@@ -84,11 +87,15 @@ class CategoriasController extends Controller
 
         $categoria->nome = ($request->nome) ? $request->nome : $categoria->nome;
         $categoria->desativado = ($request->desativado) ? $request->desativado : $categoria->desativado;
-        $categoria->save();
-
-        $mensagem = "Categoria atualizada!";
-
-        return $mensagem;
+        DB::beginTransaction();
+        try {
+            $categoria->save();
+            DB::commit();
+            return 1;
+        } catch (\Throwable $error) {
+            DB::rollback();
+            return $error->errorInfo[1];
+        }
     }
 
     /**
@@ -101,10 +108,14 @@ class CategoriasController extends Controller
     {
         $categoria = Categoria::find($id);
         $categoria->desativado = 1;
-        $categoria->save();
-
-        $mensagem = "Categoria Removida!";
-
-        return $mensagem;
+        DB::beginTransaction();
+        try {
+            $categoria->save();
+            DB::commit();
+            return 1;
+        } catch (\Throwable $error) {
+            DB::rollback();
+            return $error->errorInfo[1];
+        }
     }
 }

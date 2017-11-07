@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Anexo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AnexosController extends Controller
 {
@@ -15,8 +16,7 @@ class AnexosController extends Controller
     public function index()
     {
         $anexos = Anexo::all()->where("desativado", "!=", 1);
-
-        return view("anexos.index", ["mensagem" => null, "anexos" => $anexos]);
+        return view("anexos.index", ["anexos" => $anexos]);
     }
 
     /**
@@ -37,7 +37,15 @@ class AnexosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $anexo->save();
+            DB::commit();
+            return 1;
+        } catch (\Throwable $error) {
+            DB::rollback();
+            return $error->erroInfo[1];
+        }
     }
 
     /**
@@ -71,7 +79,15 @@ class AnexosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $anexo->save();
+            DB::commit();
+            return 1;
+        } catch (\Throwable $error) {
+            DB::rollback();
+            return $error->erroInfo[1];
+        }
     }
 
     /**
@@ -82,6 +98,16 @@ class AnexosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $anexo = Anexo::find($id);
+        $anexo->desativado = 1;
+        DB::beginTransaction();
+        try {
+            $anexo->save();
+            DB::commit();
+            return 1;
+        } catch (\Throwable $error) {
+            DB::rollback();
+            return $error->errorInfo[1];
+        }
     }
 }
