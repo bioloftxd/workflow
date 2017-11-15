@@ -25,7 +25,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = 'processos.create';
+    protected $redirectTo = 'processos/create';
 
     /**
      * Create a new controller instance.

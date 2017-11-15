@@ -9,13 +9,13 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav text-md-center nav-justified w-100">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{{action('ProcessosController@index')}}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Processos</a>
+                    <a class="nav-link" href="{{action('ProcessosController@create')}}">Processos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Etapas</a>
+                    <a class="nav-link" href="{{action('EtapasController@create')}}">Etapas</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Categorias</a>

@@ -3,6 +3,7 @@
 @section('content')
 
 <form>
+  <input type="hidden"name="_token" value="{{csrf_token()}}">
   <div class="form-row">
     <div class="form-group col-md-12">
       <label for="nome" class="col-form-label">Nome</label>
