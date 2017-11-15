@@ -1,3 +1,4 @@
+<<<<<<< HEAD
         @extends('layouts.master')
 
         @section('content')
@@ -22,6 +23,19 @@
                     <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome processo" required="">
                 </div>
                
+=======
+@extends('layouts.master')
+
+@section('content')
+
+
+    <form>
+        {{csrf_field()}}
+        <div class="form-row">
+            <div class="form-group col-lg-8">
+                <label for="nome" class="col-form-label">Nome</label>
+                <input type="text" class="form-control" id="nome" placeholder="Nome processo">
+>>>>>>> 33db5ab2f52316de4f0fd685eb83bbb3d6a1e1dd
             </div>
             <div class="form-group">
                 <label for="descricao">Descrição</label>

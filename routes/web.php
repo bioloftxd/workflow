@@ -15,14 +15,6 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index');
 
-Route::group(['prefix' => 'categorias', 'middleware' => 'auth'], function () {
-    Route::resource('/', 'CategoriasController');
-});
-
-Route::group(['prefix' => 'etapas', 'middleware' => 'auth'], function () {
-    Route::resource('/', 'EtapasController');
-});
-
-Route::group(['prefix' => 'processos', 'middleware' => 'auth'], function () {
-    Route::resource('/', 'ProcessosController');
-});
+Route::resource('categorias', 'CategoriasController');
+Route::resource('etapas', 'EtapasController');
+Route::resource('processos', 'ProcessosController');

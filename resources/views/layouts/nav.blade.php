@@ -8,6 +8,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav text-md-center nav-justified w-100">
+<<<<<<< HEAD
                 <li class="nav-item active">
                     <a class="nav-link" href="{{action('ProcessosController@index')}}">Home <span class="sr-only">(current)</span></a>
                 </li>
@@ -32,16 +33,58 @@
 
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
+=======
+
+                @auth
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Processos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Etapas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Categorias</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01"
+                           data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">Nome do Fidégua</a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdown01">
+
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+>>>>>>> 33db5ab2f52316de4f0fd685eb83bbb3d6a1e1dd
                                                      document.getElementById('logout-form').submit();">
-                            Logout
-                        </a>
+                                Logout
+                            </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            {{ csrf_field() }}
-                        </form>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
 
-                    </div>
-                </li>
+                        </div>
+                    </li>
+                @endauth
+
+                @guest
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">Login</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}">Register</a></li>
+                    </li>
+                @endguest
+
             </ul>
         </div>
     </nav>

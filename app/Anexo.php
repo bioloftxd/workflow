@@ -19,6 +19,6 @@ class Anexo extends Model
 
     public function etapa()
     {
-        return $this->hasOne(Etapa::class, 'id', 'etapas_id');
+        return $this->belongsTo(Etapa::class, "id", "etapas_id");
     }
 }

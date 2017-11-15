@@ -27,7 +27,10 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = 'processos.create';
+    protected function redirectTo()
+    {
+        return redirect()->action("ProcessosController@index");
+    }
 
     /**
      * Create a new controller instance.

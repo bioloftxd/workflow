@@ -25,7 +25,14 @@ class LoginController extends Controller
      *
      * @var string
      */
+<<<<<<< HEAD
     protected $redirectTo = 'processos/create';
+=======
+    protected function redirectTo()
+    {
+        return redirect()->action("ProcessosController@index");
+    }
+>>>>>>> 33db5ab2f52316de4f0fd685eb83bbb3d6a1e1dd
 
     /**
      * Create a new controller instance.
