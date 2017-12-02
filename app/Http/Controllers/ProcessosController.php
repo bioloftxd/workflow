@@ -45,24 +45,33 @@ class ProcessosController extends Controller
         $processo->nome = ($request->nome) ? $request->nome : "Sem nome.";
         $processo->descricao = ($request->descricao) ? $request->descricao : "Sem descrições.";
         $processo->observacao = ($request->observacao) ? $request->observacao : "Sem observações";
-        $processo->categoria_id = ($request->categoria_id) ? $request->categoria_id : 0;
+        $processo->categorias_id = ($request->categorias_id) ? $request->categorias_id : 0;
         $processo->usuario_id = ($request->usuario_id) ? $request->usuario_id : 0;
         if ($request->nome == null) {
-            return view("processos.index", ["mensagem" => "Nome do processo obrigatório!", "processo" => $processo]);
+            return view("processos.create", ["mensagem" => "Nome do processo obrigatório!", "processo" => $processo]);
+             $categorias = Categoria::all()->where("desativado", "!=", 1);
+            return view('processos.create', ["categorias" => $categorias,"mensagem" => "Nome do processo obrigatório!", "processo" => $processo]);
         }
         if ($request->descricao == null) {
-            return view("processos.index", ["mensagem" => "Descrição do processo obrigatório!", "processo" => $processo]);
+            $categorias = Categoria::all()->where("desativado", "!=", 1);
+            return view('processos.create', ["categorias" => $categorias,"mensagem" => "Descrição do processo obrigatório!", "processo" => $processo]);
+        }
+        if ($request->categorias_id == null) {
+            $categorias = Categoria::all()->where("desativado", "!=", 1);
+            return view('processos.create', ["categorias" => $categorias,"mensagem" => "Categoria do processo obrigatório!", "processo" => $processo]);
         }
         DB::beginTransaction();
         try {
             $processo->save();
             DB::commit();
             $processos = Processo::all()->where("desativado", "!=", 1);
-            return view("processos.index", ["mensagem" => "Alterações salvas!", "processos" => $processos]);
+            session()->put('processo',$processo);
+            return view("etapas.create", ["processo" => $processo]);
         } catch (\Throwable $error) {
             DB::rollback();
             dd($error);
-            return $error->errorInfo[1];
+            $processos = Processo::all()->where("desativado", "!=", 1);
+        return view('processos.index', ["processos" => $processos, "mensagem" => "Erro ao salvar processo!"]);
         }
     }
 

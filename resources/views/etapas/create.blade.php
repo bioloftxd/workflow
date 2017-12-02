@@ -2,7 +2,9 @@
 
 @section('content')
 
-<form>
+<form method="POST" action="{{route('etapas.store') }}">
+  <input type="hidden" name="processos_id" value="{{session()->get('processo')->id}}">
+    <input type="hidden" name="usuario_id" value="{{Auth::user()->id}}">
   <input type="hidden"name="_token" value="{{csrf_token()}}">
   <div class="form-row">
     <div class="form-group col-md-12">
@@ -28,10 +30,9 @@
   <div class="row">
     <div class="col-md-8">
       <button type="submit" class="btn btn-primary">Nova etapa</button>
+      <a href="{{url("etapas.finalizar")}}" class="btn btn-primary">Finalizar Processo</a>
     </div>
-    <div class="col-md-4" >
-       <button type="submit" class="btn btn-primary" style="float: right">Finalizar Processo</button>
-    </div> 
+
   </div>
   <fieldset>
     <legend>Adicionar documentos modelo</legend>

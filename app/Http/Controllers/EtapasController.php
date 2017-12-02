@@ -53,7 +53,7 @@ class EtapasController extends Controller
         try {
             $etapa->save();
             DB::commit();
-            return 1;
+            return view("etapa.create");
         } catch (\Throwable $error) {
             DB::rollback();
             return $error->errorInfo[1];
@@ -70,6 +70,11 @@ class EtapasController extends Controller
     {
         $etapa = Etapa::find($id);
         return view("etapa.show", ["etapa" => $etapa]);
+    }
+    
+    public function finalizar(){
+        $processos =  Processo::all()->where("desativado","!=",1);
+        return view('processos.index',["processos"=>$processos]);
     }
 
     /**
