@@ -26,7 +26,7 @@ class EtapasController extends Controller
      */
     public function create()
     {
-        return view('etapas.create');
+        return view('etapas/create');
     }
 
     /**
