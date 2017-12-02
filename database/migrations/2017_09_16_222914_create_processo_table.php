@@ -21,6 +21,7 @@ class CreateProcessoTable extends Migration
             $table->foreign('usuario_id')->references('id')->on("users");
             $table->string('nome');
             $table->text('descricao');
+            $table->text('observacao');
             $table->boolean('desativado')->default('0');
             $table->timestamps();
         });

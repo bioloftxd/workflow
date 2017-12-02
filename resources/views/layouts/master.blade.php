@@ -1,7 +1,17 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: lorot
- * Date: 02/12/2017
- * Time: 14:15
- */
+<!doctype html>
+<html lang="en">
+<head>
+    @include("layouts.head")
+</head>
+<body>
+<header>
+    @include("layouts.nav")
+</header>
+<main class="container-fluid">
+    @yield("content")
+</main>
+</body>
+<footer>
+    @include("layouts.footer")
+</footer>
+</html>

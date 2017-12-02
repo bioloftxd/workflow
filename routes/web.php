@@ -12,16 +12,7 @@
 */
 
 Auth::routes();
-
 Route::get('/', 'HomeController@index');
-
 Route::resource('categorias', 'CategoriasController');
 Route::resource('etapas', 'EtapasController');
 Route::resource('processos', 'ProcessosController');
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

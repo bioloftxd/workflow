@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Categoria;
 use App\Processo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -27,7 +28,8 @@ class ProcessosController extends Controller
      */
     public function create()
     {
-        return view('processos.create');
+        $categorias = Categoria::all()->where("desativado", "!=", 1);
+        return view('processos.create', ["categorias" => $categorias]);
     }
 
 
@@ -59,6 +61,7 @@ class ProcessosController extends Controller
             return view("processos.index", ["mensagem" => "Alterações salvas!", "processos" => $processos]);
         } catch (\Throwable $error) {
             DB::rollback();
+            dd($error);
             return $error->errorInfo[1];
         }
     }
@@ -84,7 +87,8 @@ class ProcessosController extends Controller
     public function edit($id)
     {
         $processo = Processo::find($id);
-        return view("processos.edit", ["processo" => $processo]);
+        $categorias = Categoria::all()->where("desativaco", "!=", 1);
+        return view("processos.edit", ["processo" => $processo, "categorias" => $categorias]);
     }
 
     /**
