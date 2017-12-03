@@ -9,7 +9,7 @@
         <div class="row justify-content-center">
             <div class="col-10 col-sm-8 col-md-7 col-lg-4">
                 <label for="email">E-mail</label>
-                <input type="email" name="email" id="email" class="form-control" id="email"
+                <input type="email" name="email" class="form-control" id="email"
                        placeholder="seuNome@exemplo.com" required
                        autofocus>
             </div>
@@ -18,7 +18,7 @@
         <div class="row justify-content-center">
             <div class="col-10 col-sm-8 col-md-7 col-lg-4">
                 <label for="password">Senha</label>
-                <input type="password" id="password" name="password" class="form-control" required>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Senha" required>
             </div>
         </div>
 
