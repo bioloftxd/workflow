@@ -20,18 +20,22 @@
                         <a class="nav-link" href="{{route("processos.index")}}">Home<span
                                     class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route("processos.index")}}">Processos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route("etapas.index")}}">Etapas</a>
-                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="processo"
+                           data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false" href="#">Processos</a>
+                            <div class="dropdown-menu" aria-labelledby="processo">
+                                <a class="dropdown-item" href="{{route('processos.create')}}">Cadastrar</a>
+                                <a class="dropdown-item" href="#">Alterar</a>
+                                <a class="dropdown-item" href="{{route('processos.index')}}">Listar</a>
+                            </div>             
+                    </li>                  
                     <li class="nav-item">
                         <a class="nav-link" href="{{route("categorias.index")}}">Categorias</a>
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01"
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown01"
                            data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
