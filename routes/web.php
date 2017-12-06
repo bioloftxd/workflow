@@ -15,5 +15,10 @@ Auth::routes();
 Route::get('/', 'HomeController@index');
 Route::resource('categorias', 'CategoriasController');
 Route::resource('etapas', 'EtapasController');
+
 Route::get('/finalizar','EtapasController@finalizar');
+
+
+
+
 Route::resource('processos', 'ProcessosController');
