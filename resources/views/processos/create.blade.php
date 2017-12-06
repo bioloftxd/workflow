@@ -41,7 +41,7 @@
             <textarea class="form-control" id="observacao" name="observacao" rows="3">@isset ($processo){{$processo->observacao}}@endisset</textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary">add Etapa</button>
+        <button type="submit" class="btn btn-primary">Vincular Etapas</button>
 
     </form>
 

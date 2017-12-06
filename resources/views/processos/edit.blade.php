@@ -2,18 +2,24 @@
 
 @section('content')
 
-    <form method="POST" action="{{route('processos.update',["id"=>$processo->id])}}">
+    <form method="POST" id="alterar-form"action="{{route('processos.update',["id"=>$processo->id])}}">
         {{ csrf_field() }}
         {{method_field("PUT")}}
         <div class="form-row">
             <div class="col-lg-4">
                 <label for="categoria" class="col-form-label">Categoria</label>
                 <div class="input-group">
-                    <select id="categoria" name="categoria" class="form-control" required="">
+                    <select id="categoria" name="categorias_id" class="form-control" required="">
                         <option value="null" disabled="" selected>Selecione uma categoria</option>
                         @foreach ($categorias as $categoria)
-                            <option value="{{$categoria->id}}"
-                                    @if($processo->categoria_id == $categoria->id) selected @endif>{{$categoria->nome}}</option>
+                            <option value="{{$categoria->id}}" 
+                                    @isset ($processo)
+                                        @if($processo->categorias_id==$categoria->id)
+                                        selected="" 
+                                        @endif 
+                                    @endisset>                                
+                                {{$categoria->nome}}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -32,11 +38,22 @@
         <div class="form-group">
             <label for="observação">Observação</label>
             <textarea class="form-control" id="observacao" name="observacao" rows="3"
-                      required="">{{$processo->observacao}}</textarea>
+                      >{{$processo->observacao}}</textarea>
         </div>
-
-        <button type="submit" class="btn btn-primary">add Etapa</button>
+        
+        
+        
 
     </form>
-
+    <a class="btn btn-primary" href="{{route('processos.update',["id"=>$processo->id])}}"
+                onclick="event.preventDefault();
+                document.getElementById('alterar-form').submit();">Alterar</a>
+    
+    <a class="btn btn-danger" href="{{ route('processos.destroy',['id'=>$processo->id]) }}"
+                onclick="event.preventDefault();
+                document.getElementById('desativar-form').submit();">Desativar</a>
+    <form id="desativar-form" action="{{ route('processos.destroy',['id'=>$processo->id]) }}"   method="POST" style="display: none;">
+    {{ csrf_field() }}
+    {{method_field("DELETE")}}
+    </form>
 @endsection
