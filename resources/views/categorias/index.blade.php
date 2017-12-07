@@ -2,6 +2,7 @@
 
     
     @section('content')
+	
  <form method="POST" action="{{route('categorias.store')}}">  
     {{csrf_field()}}
   <div class="form-row">
@@ -17,13 +18,15 @@
   
 </form>
 
-
-    <table class="table table-striped table-bordered">
+<br><br>
+    <table class="table table-striped">
     	<thead>
     		<tr>
     			<th>id</th>
     			<th>Nome Categoria</th>
-    			<th>Ação</th>
+    			<div style="float:right">
+				<th style="text-align: right">Ação</th>
+				</div>
     			
     		</tr>
     	</thead>
@@ -37,16 +40,18 @@
                     {{$categoria->nome}}
                 </td>
                 <td>
-                    <a class="btn btn-secondary" href="{{ route('categorias.edit',['id'=>$categoria->id]) }}" role="button">Editar</a>
+				<div style="float:right">
+                    <a class="btn btn-secondary btn-sm" href="{{ route('categorias.edit',['id'=>$categoria->id]) }}" role="button">Editar</a>
                    
 
-                    <a class="btn btn-danger" href="{{ route('categorias.destroy',['id'=>$categoria->id]) }}"
+                    <a class="btn btn-danger btn-sm"href="{{ route('categorias.destroy',['id'=>$categoria->id]) }}"
                 onclick="event.preventDefault();
                 document.getElementById('desativar-form{{$categoria->id}}').submit();">Desativar</a>
                 <form id="desativar-form{{$categoria->id}}" action="{{ route('categorias.destroy',['id'=>$categoria->id]) }}"   method="POST" style="display: none;">
                 {{ csrf_field()}}
                 {{method_field("DELETE")}}
                 </form>
+				</div>
                 </td>
     		</tr>
 
@@ -55,4 +60,5 @@
     		
     	</tbody>
     </table>
+	
     @endsection

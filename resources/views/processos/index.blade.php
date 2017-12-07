@@ -36,7 +36,9 @@
  
                          </div>
                      </div>
-                </div><ul>
+                </div>
+				<hr>
+				<ul>
                 @foreach ($processo->etapa as $etapa)
                     <li>
                         {{$etapa->nome}}    
