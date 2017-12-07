@@ -71,10 +71,9 @@ class EtapasController extends Controller
         $etapa = Etapa::find($id);
         return view("etapa.show", ["etapa" => $etapa]);
     }
-    
     public function finalizar(){
-        $processos =  Processo::all()->where("desativado","!=",1);
-        return view('processos.index',["processos"=>$processos]);
+        
+            return redirect()->action("ProcessosController@index");  
     }
 
     /**

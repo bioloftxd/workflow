@@ -39,11 +39,14 @@ class CategoriasController extends Controller
     {
         $categoria = new Categoria();
         $categoria->nome = ($request->nome) ? $request->nome : "Sem nome";
+        if($request->nome==null){
+           return redirect()->action("CategoriasController@index");
+       }
         DB::beginTransaction();
         try {
             $categoria->save();
             DB::commit();
-            return 1;
+            return redirect()->action("CategoriasController@index");
         } catch (\Throwable $error) {
             DB::rollback();
             return $error->errorInfo[1];
@@ -71,7 +74,8 @@ class CategoriasController extends Controller
     public function edit($id)
     {
         $categoria = Categoria::find($id);
-        return view("categorias.edit", ["categorias" => $categoria]);
+        $categorias = Categoria::all()->where("desativado","!=",1);
+        return view("categorias.edit", ["categoria" => $categoria,'categorias'=>$categorias]);
     }
 
     /**
@@ -86,12 +90,18 @@ class CategoriasController extends Controller
         $categoria = Categoria::find($id);
 
         $categoria->nome = ($request->nome) ? $request->nome : $categoria->nome;
-        $categoria->desativado = ($request->desativado) ? $request->desativado : $categoria->desativado;
+        
+
+          if($request->nome==null){
+            $categoria = Categoria::find($id);
+            $categorias = Categoria::all()->where("desativado","!=",1);
+            return view("categorias.edit", ["categoria" => $categoria,'categorias'=>$categorias]);
+       }
         DB::beginTransaction();
         try {
             $categoria->save();
             DB::commit();
-            return 1;
+            return redirect()->action("CategoriasController@index");
         } catch (\Throwable $error) {
             DB::rollback();
             return $error->errorInfo[1];
@@ -112,7 +122,7 @@ class CategoriasController extends Controller
         try {
             $categoria->save();
             DB::commit();
-            return 1;
+            return redirect()->action("CategoriasController@index");
         } catch (\Throwable $error) {
             DB::rollback();
             return $error->errorInfo[1];
