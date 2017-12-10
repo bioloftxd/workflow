@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Anexo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class AnexosController extends Controller
 {
@@ -56,7 +57,15 @@ class AnexosController extends Controller
      */
     public function show($id)
     {
-        //
+        $anexo = Anexo::find($id);
+        return view("anexos.show", ["arquivo" => $anexo]);
+    }
+
+    public function download($arquivo, $nome)
+    {
+        $path = storage_path("app\modelos\\" . $arquivo);
+        echo $path;
+        return response()->download($path, $nome);
     }
 
     /**

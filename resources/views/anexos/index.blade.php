@@ -1,7 +1,6 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: lorot
- * Date: 24/10/2017
- * Time: 21:05
- */
+@foreach($anexos as $a)
+    {{--    <a href="{{action("AnexosController@download",["arquivo"=>$a->caminho])}}">{{$a->caminho}}</a>--}}
+
+    <a href="{{route("download",["path"=>str_replace("modelos/","", $a->caminho), "nome"=>"asd"])}}">{{str_replace("modelos/","", $a->caminho)}}</a>
+    <br>
+@endforeach

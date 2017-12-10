@@ -17,6 +17,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('categorias', 'CategoriasController');
     Route::resource('etapas', 'EtapasController');
     Route::resource('processos', 'ProcessosController');
+    Route::resource('anexos', 'AnexosController');
     Route::get('/finalizar', 'EtapasController@finalizar');
+    Route::get('/download/{arquivo}/{nome}', "AnexosController@download")->name("download");
 });
-
