@@ -52,15 +52,26 @@ Processos Cadastrados
                      </div>
                 </div>
 				<hr>
-				<ul>
-                @foreach ($processo->etapa as $etapa)
-                @if(!$etapa->desativado)
-                    <li>
-                        {{$etapa->nome}}    
-                    </li>
-                @endif        
-                @endforeach
-                </ul>
+                <div class=" col-lg-11">
+    				<ul>
+                    @foreach ($processo->etapa as $etapa)
+                    @if(!$etapa->desativado)
+                        <li>
+                            {{$etapa->nome}}    
+                        </li>
+                    @endif        
+                    @endforeach
+                    </ul>
+                </div>
+                <div class="col-lg-1">
+                    @foreach ($etapa->anexo as $anexo)
+                        @if(!$anexo->desativado)
+                        {
+                            {{sizeof($anexo)}}
+                        }
+                        @endif
+                    @endforeach
+                </div>
             </div>
             
         </div>

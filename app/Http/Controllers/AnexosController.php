@@ -76,7 +76,7 @@ class AnexosController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view("anexos.edit",['id'=>$id]);
     }
 
     /**
