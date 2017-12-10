@@ -25,6 +25,6 @@ class Etapa extends Model
 
     public function anexo()
     {
-        return $this->hasMany(Anexo::class, "etapas_id", "id");
+        return $this->hasMany(Anexo::class, "etapa_id", "id");
     }
 }

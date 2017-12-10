@@ -44,4 +44,38 @@
             </div>
         </fieldset>
     </form>
+
+<table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome Anexo</th>
+                <th style="text-align: right">Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($etapa->anexo as $anexo)
+            @if(!$anexo->desativado)
+            <tr>
+                <td>
+                    {{$anexo->nome}}
+                </td>
+                <td>
+                    <div style="float:right">
+                        <a class="btn btn-secondary btn-sm" href="{{ route('anexos.edit',['id'=>$anexo->id]) }}" role="button">Editar</a>
+
+                        <a class="btn btn-danger btn-sm" href="{{ route('anexos.destroy',['id'=>$anexo->id]) }}"onclick="event.preventDefault();
+                         document.getElementById('desativar-form{{$anexo->id}}').submit();">Desativar</a>
+                        <form id="desativar-form{{$anexo->id}}" action="{{ route('anexos.destroy',['id'=>$anexo->id]) }}"   method="POST" style="display: none;">
+                        {{ csrf_field()}}
+                        {{method_field("DELETE")}}
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            @endif
+            @endforeach
+        </tbody>
+    </table>
+
+
 @endsection
