@@ -1,5 +1,7 @@
 @extends('layouts.master')
-
+@section('title')
+Cadastar Etapas
+@endsection
 @section('content')
     <form method="POST" action="{{route('etapas.store')}}" enctype="multipart/form-data">
         <input type="hidden" name="processos_id" value="{{session()->get('processo')->id}}">

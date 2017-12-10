@@ -1,5 +1,7 @@
 @extends('layouts.master')
-
+@section('title')
+{{$etapa->nome}}
+@endsection
 @section('content')
     <form method="POST" action="{{route('etapas.update',["id"=>$etapa->id])}}" enctype="multipart/form-data">
         {{method_field("PUT")}}

@@ -1,5 +1,7 @@
 @extends('layouts.master')
-
+@section('title')
+Editar Processo {{$processo->nome}}
+@endsection
 @section('content')
 
     <form method="POST" id="alterar-form"action="{{route('processos.update',["id"=>$processo->id])}}">

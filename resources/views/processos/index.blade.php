@@ -1,5 +1,7 @@
 @extends('layouts.master')
-
+@section('title')
+Processos Cadastrados
+@endsection
 @section('content')
     @foreach ($processos as $processo)    
     <div id="accordion" role="tablist">

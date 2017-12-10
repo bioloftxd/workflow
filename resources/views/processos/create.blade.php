@@ -1,5 +1,7 @@
 @extends('layouts.master')
-
+@section('title')
+Cadastar Processo
+@endsection
 @section('content')
 
     <form method="POST" action="{{route('processos.store')}}">
