@@ -64,7 +64,6 @@ class ProcessosController extends Controller
         try {
             $processo->save();
             DB::commit();
-            $processos = Processo::all()->where("desativado", "!=", 1);
             session()->put('processo', $processo);
             return view("etapas.create", ["processo" => $processo]);
         } catch (\Throwable $error) {
@@ -96,7 +95,8 @@ class ProcessosController extends Controller
     public function edit($id)
     {
         $processo = Processo::find($id);
-        $categorias = Categoria::all()->where("desativaco", "!=", 1);
+        $categorias = Categoria::all()->where("desativado", "!=", 1);
+        session()->put('processo', $processo);
         return view("processos.edit", ["processo" => $processo, "categorias" => $categorias]);
     }
 
@@ -126,6 +126,7 @@ class ProcessosController extends Controller
             $processo->save();
             DB::commit();
             $processos = Processo::all()->where("desativado", "!=", 1);
+            session()->put('processo', $processo);
             return view("processos.index", ["mensagem" => "Alterações salvas!", "processos" => $processos]);
         } catch (\Throwable $error) {
             DB::rollback();

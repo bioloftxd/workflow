@@ -59,12 +59,14 @@ class EtapasController extends Controller
         DB::beginTransaction();
         try {
             $etapa->save();
-            foreach ($request->anexo as $item) {
-                Anexo::create([
-                    'etapa_id' => $etapa->id,
-                    'nome' => $item->getClientOriginalName(),
-                    'caminho' => $item->store("modelos")
-                ]);
+            if (isset($request->anexo)) {
+                foreach ($request->anexo as $item) {
+                    Anexo::create([
+                        'etapa_id' => $etapa->id,
+                        'nome' => $item->getClientOriginalName(),
+                        'caminho' => $item->store("modelos")
+                    ]);
+                }
             }
             DB::commit();
             return view("etapas.create");
@@ -88,7 +90,6 @@ class EtapasController extends Controller
 
     public function finalizar()
     {
-
         return redirect()->action("ProcessosController@index");
     }
 
@@ -114,7 +115,6 @@ class EtapasController extends Controller
     public function update(Request $request, $id)
     {
         $etapa = Etapa::find($id);
-        $etapa->processos_id = ($request->processos_id) ? $request->processos_id : 0;
         $etapa->nome = ($request->nome) ? $request->nome : "Sem nome.";
         $etapa->descricao = ($request->descricao) ? $request->descricao : "Sem descrição.";
         $etapa->observacao = ($request->observacao) ? $request->observacao : "Sem observações.";
@@ -128,9 +128,18 @@ class EtapasController extends Controller
         DB::beginTransaction();
         try {
             $etapa->save();
+            if (isset($request->anexo)) {
+                foreach ($request->anexo as $item) {
+                    Anexo::create([
+                        'etapa_id' => $etapa->id,
+                        'nome' => $item->getClientOriginalName(),
+                        'caminho' => $item->store("modelos")
+                    ]);
+                }
+            }
             DB::commit();
-            $categorias = Categoria::all()->where("desativaco", "!=", 1);
-            $processo = Processo::find($id);
+            $categorias = Categoria::all()->where("desativado", "!=", 1);
+            $processo = Processo::find($request->processos_id);
             return view("processos.edit", ["mensagem" => "Alterações salvas!", "processo" => $processo, "id" => $etapa->processos_id, "categorias" => $categorias]);
         } catch (\Throwable $error) {
             DB::rollback();
@@ -148,12 +157,20 @@ class EtapasController extends Controller
     {
         $etapa = Etapa::find($id);
         $etapa->desativado = 1;
+        $anexos = Anexo::all()->where("etapa_id", "=", $id);
         DB::beginTransaction();
         try {
+            if (isset($anexos)) {
+                foreach ($anexos as $anexo) {
+                    $anexo->desativado = 1;
+                    $anexo->save();
+                }
+            }
             $etapa->save();
             DB::commit();
-            $etapas = Etapa::all()->where("desativado", "!=", 1);
-            return view("etapas.index", ["mensagem" => "Etapa removida!", "etapas" => $etapas]);
+            $categorias = Categoria::all()->where("desativado", "!=", 1);
+            $processo = Processo::find($etapa->processos_id);
+            return view("processos.edit", ["mensagem" => "Etapa removida!", "processo" => $processo, "id" => $etapa->processos_id, "categorias" => $categorias]);
         } catch (\Throwable $error) {
             DB::rollback();
             return $error;
