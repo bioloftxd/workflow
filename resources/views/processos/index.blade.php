@@ -15,7 +15,19 @@
                 </h5>
             </div>
             <div class=" col-lg-1">
-                Etapas <span class="badge badge-secondary">{{sizeof($processo->etapa)}}</span>
+                Etapas <span class="badge badge-secondary">
+                    @php
+                        $contar=0;
+                    @endphp
+                    @foreach ($processo->etapa as $etapa)
+                        @php
+                        if($etapa->desativado===0)
+                        {
+                         $contar++;   
+                        }
+                        @endphp
+                    @endforeach
+                {{$contar}}</span>
             </div>
             </div>
             </div>
@@ -40,12 +52,11 @@
 				<hr>
 				<ul>
                 @foreach ($processo->etapa as $etapa)
+                @if(!$etapa->desativado)
                     <li>
                         {{$etapa->nome}}    
                     </li>
-                        
-                    
-                    
+                @endif        
                 @endforeach
                 </ul>
             </div>
