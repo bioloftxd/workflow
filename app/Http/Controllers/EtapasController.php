@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Anexo;
+use App\Categoria;
 use App\Etapa;
+use App\Processo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -123,15 +125,13 @@ class EtapasController extends Controller
         if ($request->nome == null) {
             return view("etapas.edit", ["mensagem" => "Nome da etapa obrigatório!", "etapa" => $etapa]);
         }
-        echo "<pre>";
-        echo $etapa;
-        echo "<pre>";
         DB::beginTransaction();
         try {
             $etapa->save();
             DB::commit();
-            $etapas = Etapa::all()->where("desativado", "!=", 1);
-            return view("etapas.index", ["mensagem" => "Alterações salvas!", "etapas" => $etapas]);
+            $categorias = Categoria::all()->where("desativaco", "!=", 1);
+            $processo = Processo::find($id);
+            return view("processos.edit", ["mensagem" => "Alterações salvas!", "processo" => $processo, "id" => $etapa->processos_id, "categorias" => $categorias]);
         } catch (\Throwable $error) {
             DB::rollback();
             return $error;
