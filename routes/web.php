@@ -13,8 +13,10 @@
 
 Auth::routes();
 Route::get('/', 'HomeController@index');
-Route::resource('categorias', 'CategoriasController');
-Route::resource('etapas', 'EtapasController');
-Route::get('/finalizar','EtapasController@finalizar');
+Route::middleware(['auth'])->group(function () {
+    Route::resource('categorias', 'CategoriasController');
+    Route::resource('etapas', 'EtapasController');
+    Route::resource('processos', 'ProcessosController');
+    Route::get('/finalizar', 'EtapasController@finalizar');
+});
 
-Route::resource('processos', 'ProcessosController');

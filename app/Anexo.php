@@ -8,7 +8,7 @@ class Anexo extends Model
 {
     protected $fillable = [
         'id',
-        'etapas_id',
+        'etapa_id',
         'nome',
         'caminho',
         'desativado'

@@ -49,7 +49,7 @@ class CategoriasController extends Controller
             return redirect()->action("CategoriasController@index");
         } catch (\Throwable $error) {
             DB::rollback();
-            return $error->errorInfo[1];
+            return $error;
         }
     }
 
@@ -125,7 +125,7 @@ class CategoriasController extends Controller
             return redirect()->action("CategoriasController@index");
         } catch (\Throwable $error) {
             DB::rollback();
-            return $error->errorInfo[1];
+            return $error;
         }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Anexo;
 use App\Etapa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +27,7 @@ class EtapasController extends Controller
      */
     public function create()
     {
-        return view('etapas/create');
+        return view('etapas.create');
     }
 
     /**
@@ -49,14 +50,25 @@ class EtapasController extends Controller
         if ($request->nome == null) {
             return view("etapas.create", ["mensagem" => "Nome da etapa obrigatório!", "etapa" => $etapa]);
         }
+//        strlen($item->getClientOriginalExtension()); Retorna o tamanho da string de extensão
+//        $item->getClientOriginalExtension(); Retorna o extensão
+//        $item->getSize(); Retorna o tamanho do arquivo
+//        $item->storeAs("PASTA", "NOME DO ARQUIVO.extensão"); Escolhe o nome do arquivo
         DB::beginTransaction();
         try {
             $etapa->save();
+            foreach ($request->anexo as $item) {
+                Anexo::create([
+                    'etapa_id' => $etapa->id,
+                    'nome' => $item->getClientOriginalName(),
+                    'caminho' => $item->store("modelos")
+                ]);
+            }
             DB::commit();
-            return view("etapa.create");
+            return view("etapas.create");
         } catch (\Throwable $error) {
             DB::rollback();
-            return $error->errorInfo[1];
+            return $error;
         }
     }
 
@@ -69,11 +81,13 @@ class EtapasController extends Controller
     public function show($id)
     {
         $etapa = Etapa::find($id);
-        return view("etapa.show", ["etapa" => $etapa]);
+        return view("etapas.show", ["etapa" => $etapa]);
     }
-    public function finalizar(){
-        
-            return redirect()->action("ProcessosController@index");  
+
+    public function finalizar()
+    {
+
+        return redirect()->action("ProcessosController@index");
     }
 
     /**
@@ -85,7 +99,7 @@ class EtapasController extends Controller
     public function edit($id)
     {
         $etapa = Etapa::find($id);
-        return view("etapa.edit", ["etapa" => $etapa]);
+        return view("etapas.edit", ["etapa" => $etapa]);
     }
 
     /**
@@ -109,6 +123,9 @@ class EtapasController extends Controller
         if ($request->nome == null) {
             return view("etapas.edit", ["mensagem" => "Nome da etapa obrigatório!", "etapa" => $etapa]);
         }
+        echo "<pre>";
+        echo $etapa;
+        echo "<pre>";
         DB::beginTransaction();
         try {
             $etapa->save();
@@ -117,7 +134,7 @@ class EtapasController extends Controller
             return view("etapas.index", ["mensagem" => "Alterações salvas!", "etapas" => $etapas]);
         } catch (\Throwable $error) {
             DB::rollback();
-            return $error->errorInfo[1];
+            return $error;
         }
     }
 
@@ -139,7 +156,7 @@ class EtapasController extends Controller
             return view("etapas.index", ["mensagem" => "Etapa removida!", "etapas" => $etapas]);
         } catch (\Throwable $error) {
             DB::rollback();
-            return $error->errorInfo[1];
+            return $error;
         }
     }
 }

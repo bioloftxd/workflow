@@ -107,7 +107,7 @@ class AnexosController extends Controller
             return 1;
         } catch (\Throwable $error) {
             DB::rollback();
-            return $error->errorInfo[1];
+            return $error;
         }
     }
 }
