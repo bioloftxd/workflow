@@ -47,33 +47,18 @@ Processos Cadastrados
                          </div>
                          <div class="col col-lg-1">
                             <a class="btn btn-secondary" href="{{ route('processos.edit',['id'=>$processo->id]) }}" role="button">Editar</a>
- 
                          </div>
                      </div>
                 </div>
 				<hr>
-                <div class=" col-lg-11">
-    				<ul>
-                    @foreach ($processo->etapa as $etapa)
-                    @if(!$etapa->desativado)
-                        <li>
-                            {{$etapa->nome}}    
-                        </li>
-                    @endif        
-                    @endforeach
-                    </ul>
-                </div>
-                <div class="col-lg-1">
-                    @foreach ($etapa->anexo as $anexo)
-                        @if(!$anexo->desativado)
-                        {
-                            {{sizeof($anexo)}}
-                        }
-                        @endif
-                    @endforeach
-                </div>
+        		<ul>
+                @foreach ($processo->etapa as $etapa)
+                    <li>
+                        {{$etapa->nome}}    
+                    </li>
+                @endforeach
+                </ul>
             </div>
-            
         </div>
     </div>
     @endforeach
