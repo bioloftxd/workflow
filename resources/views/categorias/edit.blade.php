@@ -42,7 +42,7 @@
                     <a class="btn btn-secondary btn-sm" href="{{ route('categorias.edit',['id'=>$categoria->id]) }}" role="button">Editar</a>
                    
 
-                    <a class="btn btn-danger btn-sm"href="{{ route('categorias.destroy',['id'=>$categoria->id]) }}"
+                    <a class="btn btn-danger btn-sm" href="{{ route('categorias.destroy',['id'=>$categoria->id]) }}"
                 onclick="event.preventDefault();
                 document.getElementById('desativar-form{{$categoria->id}}').submit();">Desativar</a>
                 <form id="desativar-form{{$categoria->id}}" action="{{ route('categorias.destroy',['id'=>$categoria->id]) }}"   method="POST" style="display: none;">

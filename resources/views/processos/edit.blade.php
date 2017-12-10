@@ -56,4 +56,37 @@
     {{ csrf_field() }}
     {{method_field("DELETE")}}
     </form>
+    <center><h3>Etapas do processo {{$processo->nome}}</h3></center>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome Etapa</th>
+                <th style="text-align: right">Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($processo->etapa as $etapa)
+            <tr>
+                <td>
+                    {{$etapa->nome}}
+                </td>
+                <td>
+                    <div style="float:right">
+                        <a class="btn btn-secondary btn-sm" href="{{ route('etapas.edit',['id'=>$etapa->id]) }}" role="button">Editar</a>
+                        
+                        <a class="btn btn-danger btn-sm" href="{{ route('etapas.destroy',['id'=>$etapa->id]) }}"onclick="event.preventDefault();
+                         document.getElementById('desativar-form{{$etapa->id}}').submit();">Desativar</a>
+                        <form id="desativar-form{{$etapa->id}}" action="{{ route('etapas.destroy',['id'=>$etapa->id]) }}"   method="POST" style="display: none;">
+                        {{ csrf_field()}}
+                        {{method_field("DELETE")}}
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    
+
 @endsection
