@@ -72,7 +72,7 @@ class EtapasController extends Controller
             return view("etapas.create");
         } catch (\Throwable $error) {
             DB::rollback();
-            return $error;
+            dd($error);
         }
     }
 

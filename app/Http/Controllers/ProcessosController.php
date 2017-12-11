@@ -8,6 +8,7 @@ use App\Etapa;
 use App\ProcessoIniciar;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProcessosController extends Controller
@@ -76,8 +77,6 @@ class ProcessosController extends Controller
         } catch (\Throwable $error) {
             DB::rollback();
             dd($error);
-            $processos = Processo::all()->where("desativado", "!=", 1);
-            return view('processos.index', ["processos" => $processos, "mensagem" => "Erro ao salvar processo!"]);
         }
     }
 
@@ -132,9 +131,8 @@ class ProcessosController extends Controller
         try {
             $processo->save();
             DB::commit();
-            $processos = Processo::all()->where("desativado", "!=", 1);
             session()->put('processo', $processo);
-            return view("processos.index", ["mensagem" => "Alterações salvas!", "processos" => $processos]);
+            return redirect()->action("ProcessosController@index");
         } catch (\Throwable $error) {
             DB::rollback();
             return $error;
@@ -155,57 +153,57 @@ class ProcessosController extends Controller
         try {
             $processo->save();
             DB::commit();
-            $processos = Processo::all()->where("desativado", "!=", 1);
-            return view("processos.index", ["mensagem" => "Processo removido!", "processos" => $processos]);
+//            $processos = Processo::all()->where("desativado", "!=", 1);
+//            return view("processos.index", ["mensagem" => "Processo removido!", "processos" => $processos]);
+            return redirect()->action("ProcessosController@index");
         } catch (\Throwable $error) {
             DB::rollback();
             return $error->errorInfo[1];
         }
     }
 
-    public function start(Request $request){
+    public function start(Request $request)
+    {
+        $id = $request->id;
+        $etapas = [];
+        $temp = Etapa::all()->where("desativado", "!=", 1)->where("processos_id", "=", $id);
+        foreach ($temp as $a) {
+            $etapas[] = $a;
+        }
+        $processo = DB::table('processos')->where('id', $id)->first();
+        $verificar = DB::table('processo_iniciar')->where('processos_id', $processo->id)->first();
 
-      $etapas = Etapa::all();
+        if ($verificar == null or $verificar->finalizado === 1) {
+            $inicia = new ProcessoIniciar();
 
-      $id = $request->id;
-      $user = DB::table('users')->where('id', $id)->first();
-      $processo = DB::table('processos')->where('id', $id)->first();
-
-      $verificar = DB::table('processo_iniciar')->where('processos_id', $processo->id)->first();
-
-
-       if($verificar == null or $verificar->finalizado === 1 ){
-          $inicia = new ProcessoIniciar();
-
-          date_default_timezone_set('America/Cuiaba');
-          $date = date('Y-m-d H:i');
-          $inicia->nome = $processo->nome;
-          $inicia->processos_id = $processo->id;
-          $inicia->usuario_id = $user->id;
-          $inicia->data_inicio = $date;
-          $inicia->data_final = $date;
-          $inicia->finalizado = 0;
-
-          $inicia->save();
-      }
-
-      $idp = $inicia->id;
-      return view("processos/inicioProcesso",compact('etapas','idp'));
+            date_default_timezone_set('America/Cuiaba');
+            $date = date('Y-m-d H:i');
+            $inicia->nome = $processo->nome;
+            $inicia->processos_id = $processo->id;
+            $inicia->usuario_id = Auth::id();
+            $inicia->data_inicio = $date;
+            $inicia->data_final = $date;
+            $inicia->finalizado = 0;
+            $inicia->save();
+            session()->put("id_processo", $inicia->id);
+        }
+        return view("processos/inicioProcesso", ['etapas' => $etapas]);
     }
 
-    public function finish(Request $request){
+    public function finish(Request $request)
+    {
 
-     $id = $request->id;
+        $id = $request->id;
 
-     DB::table('processo_iniciar')
+        DB::table('processo_iniciar')
             ->where('id', $id)
             ->update(['finalizado' => 1]);
-     $finalizar = new ProcessoIniciar();
-     $processos = Processo::all()->where("desativado", "!=", 1);
-     $processos_abertos = ProcessoIniciar::all()->where("finalizado", "==", 0);
-     $processos_finalizados = ProcessoIniciar::all()->where("finalizado", "==", 1);
+        $finalizar = new ProcessoIniciar();
+        $processos = Processo::all()->where("desativado", "!=", 1);
+        $processos_abertos = ProcessoIniciar::all()->where("finalizado", "==", 0);
+        $processos_finalizados = ProcessoIniciar::all()->where("finalizado", "==", 1);
 
-     return view('processos.index', compact('processos', 'processos_finalizados', 'processos_abertos'));
+        return view('processos.index', compact('processos', 'processos_finalizados', 'processos_abertos'));
 
 
     }

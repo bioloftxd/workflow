@@ -64,7 +64,6 @@ class AnexosController extends Controller
     public function download($arquivo, $nome)
     {
         $path = storage_path("app\modelos\\" . $arquivo);
-        echo $path;
         return response()->download($path, $nome);
     }
 
@@ -76,7 +75,7 @@ class AnexosController extends Controller
      */
     public function edit($id)
     {
-        return view("anexos.edit",['id'=>$id]);
+        return view("anexos.edit", ['id' => $id]);
     }
 
     /**
@@ -88,14 +87,19 @@ class AnexosController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $anexo = Anexo::find($id);
+        $item = $request->anexo;
+        Storage::delete(storage_path("app\\" . $anexo->caminho));
+        $anexo->nome = $item->getClientOriginalName();
+        $anexo->caminho = $item->store("modelos");
         DB::beginTransaction();
         try {
             $anexo->save();
             DB::commit();
-            return 1;
+            return redirect()->action("EtapasController@edit", ["id" => $anexo->etapa_id]);
         } catch (\Throwable $error) {
             DB::rollback();
-            return $error->erroInfo[1];
+            return 0;
         }
     }
 
@@ -109,11 +113,12 @@ class AnexosController extends Controller
     {
         $anexo = Anexo::find($id);
         $anexo->desativado = 1;
+        Storage::delete($anexo->caminho);
         DB::beginTransaction();
         try {
             $anexo->save();
             DB::commit();
-            return 1;
+            return redirect()->action("EtapasController@edit", ["id" => $anexo->etapa_id]);
         } catch (\Throwable $error) {
             DB::rollback();
             return $error;
