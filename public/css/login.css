@@ -1,0 +1,93 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato', sans-serif;
+}
+
+
+.verde{
+  width: 100%;
+  height: 280px;
+  background-color: rgba(0,155,39,0.6);
+  border-bottom: black;
+}
+
+.jumbotron{
+  background-color: white;
+  box-shadow: 0px 2px 2px rgba(0,155,39,0.6);
+  position: relative;
+  top: 130px;
+}
+
+.btn-login{
+  width: 100%;
+  color: white;
+  background-color:rgba(0,155,39,0.6);
+
+}
+
+h5, h3, a {
+  font-size: 15px;
+  text-align: center;
+}
+
+h3{
+  font-size: 20px;
+  position: relative;
+  top: 120px;
+  font-weight: 400;
+  text-align: center;
+
+}
+
+i{
+  position: absolute;
+  padding: 5% 30%;
+  color: rgba(55,55,55,0.8);
+}
+
+@media screen and (min-width: 480px){
+  i{
+    padding: 2% 45%;
+  }
+
+  .jumbotron{
+    width: 45%;
+    margin: 2% 31%;
+
+  }
+}
+
+@media screen an (min-width: 768px){
+
+  .jumbotron{
+    width: 40%;
+    margin: -2% 31%;
+
+  }
+}
+
+@media screen and (min-width: 1280px){
+  .verde{
+    width: 100%;
+    height: 350px;
+    background-color: rgba(0,155,39,0.6);
+  }
+
+  .jumbotron{
+    width: 40%;
+    margin: 1.5% 31%;
+
+  }
+
+  h3{
+    padding-top: 20px;
+
+  }
+
+  .fa{
+    position: absolute;
+    padding: 3% 46%;
+    color: rgba(55,55,55,0.8);
+  }
+}

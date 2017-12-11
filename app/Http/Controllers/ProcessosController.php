@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Categoria;
 use App\Processo;
+use App\Etapa;
+use App\ProcessoIniciar;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -18,7 +21,11 @@ class ProcessosController extends Controller
     public function index()
     {
         $processos = Processo::all()->where("desativado", "!=", 1);
-        return view('processos.index', ["processos" => $processos]);
+        $processos_finalizados = ProcessoIniciar::all()->where("finalizado", "!=", 0);
+        $processos_abertos = ProcessoIniciar::all()->where("finalizado", "!=", 1);
+        $processo_iniciar = ProcessoIniciar::all();
+
+        return view('processos.index', compact('processos', 'processos_finalizados', 'processos_abertos', 'processo_iniciar'));
     }
 
     /**
@@ -82,7 +89,7 @@ class ProcessosController extends Controller
      */
     public function show($id)
     {
-        $processo = Processos::find($id);
+        $processo = Processo::find($id);
         return view("processos.show", ["processo" => $processo]);
     }
 
@@ -154,5 +161,52 @@ class ProcessosController extends Controller
             DB::rollback();
             return $error->errorInfo[1];
         }
+    }
+
+    public function start(Request $request){
+
+      $etapas = Etapa::all();
+
+      $id = $request->id;
+      $user = DB::table('users')->where('id', $id)->first();
+      $processo = DB::table('processos')->where('id', $id)->first();
+
+      $verificar = DB::table('processo_iniciar')->where('processos_id', $processo->id)->first();
+
+
+       if($verificar == null or $verificar->finalizado === 1 ){
+          $inicia = new ProcessoIniciar();
+
+          date_default_timezone_set('America/Cuiaba');
+          $date = date('Y-m-d H:i');
+          $inicia->nome = $processo->nome;
+          $inicia->processos_id = $processo->id;
+          $inicia->usuario_id = $user->id;
+          $inicia->data_inicio = $date;
+          $inicia->data_final = $date;
+          $inicia->finalizado = 0;
+
+          $inicia->save();
+      }
+
+      $idp = $inicia->id;
+      return view("processos/inicioProcesso",compact('etapas','idp'));
+    }
+
+    public function finish(Request $request){
+
+     $id = $request->id;
+
+     DB::table('processo_iniciar')
+            ->where('id', $id)
+            ->update(['finalizado' => 1]);
+     $finalizar = new ProcessoIniciar();
+     $processos = Processo::all()->where("desativado", "!=", 1);
+     $processos_abertos = ProcessoIniciar::all()->where("finalizado", "==", 0);
+     $processos_finalizados = ProcessoIniciar::all()->where("finalizado", "==", 1);
+
+     return view('processos.index', compact('processos', 'processos_finalizados', 'processos_abertos'));
+
+
     }
 }

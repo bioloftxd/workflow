@@ -3,6 +3,12 @@
 {{$etapa->nome}}
 @endsection
 @section('content')
+@push('links')
+    <link rel="stylesheet" href="/css/categorias.css">
+@endpush
+
+@section('content')
+<div class="container">
     <form method="POST" action="{{route('etapas.update',["id"=>$etapa->id])}}" enctype="multipart/form-data">
         {{method_field("PUT")}}
         {{ csrf_field() }}
@@ -76,6 +82,6 @@
             @endforeach
         </tbody>
     </table>
-
+</div>
 
 @endsection

@@ -2,8 +2,13 @@
 @section('title')
 Editar Processo {{$processo->nome}}
 @endsection
+@push('links')
+    <link rel="stylesheet" href="/css/categorias.css">
+@endpush
+
 @section('content')
 
+<div class="container">
     <form method="POST" id="alterar-form"action="{{route('processos.update',["id"=>$processo->id])}}">
         {{ csrf_field() }}
         {{method_field("PUT")}}
@@ -14,12 +19,12 @@ Editar Processo {{$processo->nome}}
                     <select id="categoria" name="categorias_id" class="form-control" required="">
                         <option value="null" disabled="" selected>Selecione uma categoria</option>
                         @foreach ($categorias as $categoria)
-                            <option value="{{$categoria->id}}" 
+                            <option value="{{$categoria->id}}"
                                     @isset ($processo)
                                         @if($processo->categorias_id==$categoria->id)
-                                        selected="" 
-                                        @endif 
-                                    @endisset>                                
+                                        selected=""
+                                        @endif
+                                    @endisset>
                                 {{$categoria->nome}}
                             </option>
                         @endforeach
@@ -42,13 +47,13 @@ Editar Processo {{$processo->nome}}
             <textarea class="form-control" id="observacao" name="observacao" rows="3"
                       >{{$processo->observacao}}</textarea>
         </div>
-                
+
     </form>
 
     <a class="btn btn-primary" href="{{route('processos.update',["id"=>$processo->id])}}"
                 onclick="event.preventDefault();
                 document.getElementById('alterar-form').submit();">Alterar</a>
-    
+
     <a class="btn btn-danger" href="{{ route('processos.destroy',['id'=>$processo->id]) }}"
                 onclick="event.preventDefault();
                 document.getElementById('desativar-form').submit();">Desativar</a>
@@ -58,7 +63,7 @@ Editar Processo {{$processo->nome}}
     </form>
     <a class="btn btn-success" href="{{ route('etapas.create') }}" role="button">Adicionar Etapa</a>
     <center><h3>Etapas</h3></center>
-    
+
     <table class="table table-striped">
         <thead>
             <tr>
@@ -90,6 +95,6 @@ Editar Processo {{$processo->nome}}
             @endforeach
         </tbody>
     </table>
-    
+  </div>
 
 @endsection

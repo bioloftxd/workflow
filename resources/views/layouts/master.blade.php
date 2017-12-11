@@ -4,15 +4,14 @@
     @include("layouts.head")
 </head>
 <body>
-<header>
-    @include("layouts.nav")
-</header>
-<main class="container-fluid">
-    @yield("content")
-</main>
-</body>
+    @if(Auth::guest())
+        @yield("content")
+    @else
+        @include("layouts.nav")
+        @yield("content")
+    @endif
 <footer>
     @include("layouts.footer")
 </footer>
+</body>
 </html>
-

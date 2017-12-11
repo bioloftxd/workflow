@@ -1,0 +1,56 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato', sans-serif;
+}
+
+.verde{
+  width: 100%;
+  height: 280px;
+  background-color: rgba(0,155,39,0.6);
+  border-bottom: black;
+}
+
+.jumbotron{
+  background-color: white;
+  box-shadow: 0px 2px 2px rgba(0,155,39,0.6);
+  position: relative;
+  top: 140px;
+}
+
+h3{
+  font-size: 20px;
+  position: relative;
+  top: 120px;
+  text-align: center;
+  font-weight: 400;
+}
+
+button{
+  width:100%;
+}
+
+.btn-login{
+  width: 100%;
+  color: white;
+  background-color:rgba(0,155,39,0.6);
+
+}
+
+@media screen and (min-width: 480px){
+  .jumbotron{
+    width: 45%;
+    margin: 2% 31%;
+  }
+
+}
+
+@media screen an (min-width: 768px){
+
+  .jumbotron{
+    width: 40%;
+    margin: -2% 31%;
+  }
+
+  button
+}

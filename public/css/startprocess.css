@@ -1,0 +1,104 @@
+*{
+	margin:0;
+	padding: 0;
+}
+
+.btn-color{
+	background:rgba(149,149,149,0.4);
+}
+
+#formulario{
+	width: 100%;
+	text-align: center;
+	position: relative;
+}
+
+#formulario fieldset{
+	background: white;
+	border:0 none;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+
+	box-shadow: 0 0 15px 1px rgba(0,0,0,0.4);
+	padding: 20px 30px;
+
+	box-sizing: border-box;
+	width: 80%;
+	margin: 0 10%;
+	position: absolute;
+}
+
+#formulario fieldset:not(:first-of-type){
+	display: none;
+}
+
+#formulario h1{
+	width: 100%;
+	font-size: 1.4em;
+}
+
+#formulario h3{
+	text-align: center;
+	width: 100%;
+	font-size: 1em;
+}
+
+#formulario #progress{
+	margin-bottom: 30px;
+	overflow: hidden;
+	counter-reset: step;
+}
+
+#formulario #progress li{
+	margin-top: 50px;
+	list-style-type: none;
+	color:white;
+	font-weight: bold;
+	text-transform: uppercase;
+	font-size: 10px;
+	float: left;
+	width: 33.33%;
+	position: relative;
+}
+
+#formulario #progress li:before{
+	content: counter(step);
+	box-shadow: 0 0 15px 1px rgba(0,0,0,0.4);
+	counter-increment: step;
+	width:20px;
+	display:block;
+	line-height: 20px;
+	background: white;
+	color: #333;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webki-border-radius: 10px;
+	margin: 8px auto 10px auto;
+}
+
+#formulario #progress li:after{
+	content: '';
+	width: 100%;
+	box-shadow: 0 0 2px 0px black;
+	background: white;
+	height: 2px;
+	position: absolute;
+	top: 16px;
+	left: -50%;
+	z-index: -1;
+}
+
+#formulario #progress li:first-child:after{
+	content:none;
+}
+
+#formulario #progress li.ativo:before, #formulario #progress li.ativo:after{
+	background:rgba(255,53,53,0.9);
+	color: white;
+	text-shadow: 0 1px 0;
+}
+
+.icor{
+	color: rgba(255,53,53,0.9);
+}

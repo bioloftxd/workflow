@@ -3,13 +3,18 @@
 @section('title')
 Cadastrar categorias
 @endsection
-    
+
+@push('links')
+    <link rel="stylesheet" href="/css/categorias.css">
+@endpush
+
 @section('content')
-	
+
+<div class="container">
 <form method="POST" action="{{route('categorias.store')}}">
     {{csrf_field()}}
     <div class="form-row">
-        <div class="form-group col-md-11">      
+        <div class="form-group col-md-11">
             <input type="text" name="nome" class="form-control" required="" placeholder="Criar nova Categoria">
         </div>
         <div class="form-group col-md-1">
@@ -33,7 +38,7 @@ Cadastrar categorias
         @foreach ($categorias as $categoria)
     	<tr>
             <td>
-                {{$categoria->id}}         
+                {{$categoria->id}}
             </td>
             <td>
                 {{$categoria->nome}}
@@ -52,8 +57,9 @@ Cadastrar categorias
             </td>
         </tr>
         @endforeach
-    		
+
     </tbody>
 </table>
-	
+</div>
+
 @endsection

@@ -2,7 +2,13 @@
 @section('title')
 Cadastar Etapas
 @endsection
+
+@push('links')
+    <link rel="stylesheet" href="/css/categorias.css">
+@endpush
+
 @section('content')
+<div class="container">
     <form method="POST" action="{{route('etapas.store')}}" enctype="multipart/form-data">
         <input type="hidden" name="processos_id" value="{{session()->get('processo')->id}}">
         <input type="hidden" name="usuario_id" value="{{Auth::user()->id}}">
@@ -30,8 +36,8 @@ Cadastar Etapas
         </div>
         <div class="row">
             <div class="col-md-8">
-                <button type="submit" class="btn btn-primary">Salvar</button>
-                <a href="{{action("EtapasController@finalizar")}}" class="btn btn-danger">Finalizar Processo</a>
+                <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                <a href="{{action("EtapasController@finalizar")}}" class="btn btn-danger btn-sm">Finalizar Processo</a>
             </div>
         </div>
         <fieldset>
@@ -41,4 +47,5 @@ Cadastar Etapas
             </div>
         </fieldset>
     </form>
+</div>
 @endsection

@@ -3,20 +3,24 @@
 @section('title')
 {{$categoria->nome}}
 @endsection
-    
+@push('links')
+    <link rel="stylesheet" href="/css/categorias.css">
+@endpush
+
 @section('content')
-	
-<form method="POST" action="{{route('categorias.update',["id"=>$categoria->id])}}">  
+
+<div class="container">
+<form method="POST" action="{{route('categorias.update',["id"=>$categoria->id])}}">
     {{csrf_field()}}
      {{method_field("PUT")}}
     <div class="form-row">
-        <div class="form-group col-md-11">      
+        <div class="form-group col-md-11">
             <input type="text" name="nome" class="form-control" required="" value="{{$categoria->nome}}">
         </div>
         <div class="form-group col-md-1">
             <button type="submit" class="btn btn-primary">Salvar</button>
         </div>
-    </div>  
+    </div>
 </form>
 <br><br>
 <table class="table table-striped">
@@ -31,7 +35,7 @@
     	@foreach ($categorias as $categoria)
     	<tr>
     		<td>
-                {{$categoria->id}}         
+                {{$categoria->id}}
              </td>
             <td>
                 {{$categoria->nome}}
@@ -49,8 +53,9 @@
             </div>
                 </td>
     		</tr>
-            @endforeach    		
+            @endforeach
     </tbody>
 </table>
+</div>
 
 @endsection
