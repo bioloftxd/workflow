@@ -5,7 +5,6 @@
 @push('links')
     <link rel="stylesheet" href="/css/index.css">
 @endpush
-
 @section('content')
     <div class="container">
         <h3><i class="fa fa-folder-o" aria-hidden="true"></i> Modelos de Processos </h3>
@@ -38,7 +37,7 @@
                                 @if($processo->usuario_id === Auth::id())
                                     <div class="col col-lg-9">
                                         @else
-                                            <div class="col col-lg-10">
+                                            <div class="col col-lg-9">
                                                 @endif
 
                                                 <p><b>Descrição: </b>{{$processo->descricao}}</p>
@@ -64,11 +63,12 @@
                                                        href="{{ route('inicio',['id'=>$processo->id]) }}" role="button">Executar</a>
                                                 </div>
                                             @else
-                                                <div class="col col-lg-2">
+                                                <div class="col col-lg-3">
+                                                    <a class="btn btn-primary btn-sm"
+                                                       href="{{ route('mensagem.show',['id'=>$processo->id]) }}" role="button">Mensagem</a>
 
                                                     <a class="btn btn-success btn-sm"
-                                                       href="{{ route('processos.edit',['id'=>$processo->id]) }}"
-                                                       role="button">Executar</a>
+                                                       href="{{ route('inicio',['id'=>$processo->id]) }}" role="button">Executar</a>
                                                 </div>
                                             @endif
                                     </div>
@@ -116,7 +116,8 @@
                                             <p><b>Finalizado: </b>{{$processoa->data_final}}</p>
                                         </div>
                                         <div class="col col-lg-1">
-                                            <a class="btn btn-secondary" role="button" href="#">Ver</a>
+                                            <a class="btn btn-secondary btn-sm" role="button"
+                                               href="{{route('continuar',['id'=>$processoa->id]) }}">Continuar</a>
                                         </div>
                                     </div>
                                 </div>

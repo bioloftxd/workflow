@@ -32,12 +32,27 @@
       <li class="nav-item">
         <a class="nav-link" href="{{route("categorias.index")}}">Categorias</a>
       </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{route("mensagem.index")}}"><i class="fa fa-comments-o" aria-hidden="true"></i> Mensagem
+
+                    <?php
+
+                    $buscaAdmin = App\Messenger::where('admin_id', '=' ,Auth::user()->id);
+
+                    $qtdMensagem = $buscaAdmin->where('status_admin', '=', 'false')->count();
+                    ?>
+
+                    ({{$qtdMensagem}})
+
+                </a>
+
+            </li>
     </ul>
       <ul class="nav navbar-nav navbar-right">
       <li class="nav-item dropdown navbar-right">
           <a class="nav-link dropdown-toggle" href="#" id="dropdown01"
              data-toggle="dropdown"
-             aria-haspopup="true" aria-expanded="false"><i class="fa fa-comments-o" aria-hidden="true"></i>
+             aria-haspopup="true" aria-expanded="false">
 {{ Auth::user()->name }}</a>
           <div class="dropdown-menu" aria-labelledby="dropdown01">
               <a class="dropdown-item" href="#">Meus Dados</a>

@@ -190,21 +190,21 @@ class ProcessosController extends Controller
         return view("processos/inicioProcesso", ['etapas' => $etapas]);
     }
 
-    public function finish(Request $request)
+    public function finish($id)
     {
-
-        $id = $request->id;
-
-        DB::table('processo_iniciar')
-            ->where('id', $id)
-            ->update(['finalizado' => 1]);
-        $finalizar = new ProcessoIniciar();
+        $pf = ProcessoIniciar::where("processos_id", "=", $id)->first();
+        $pf->finalizado = 1;
+        $pf->save();
         $processos = Processo::all()->where("desativado", "!=", 1);
         $processos_abertos = ProcessoIniciar::all()->where("finalizado", "==", 0);
         $processos_finalizados = ProcessoIniciar::all()->where("finalizado", "==", 1);
-
         return view('processos.index', compact('processos', 'processos_finalizados', 'processos_abertos'));
+    }
 
-
+    public function sequencia($id)
+    {
+        $paberto = ProcessoIniciar::where('id', $id)->first();
+        $etapas = Etapa::all()->where("processos_id", "=", $paberto->processos_id);
+        return view('processos/inicioProcesso', ['etapas' => $etapas]);
     }
 }

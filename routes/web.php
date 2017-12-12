@@ -18,8 +18,11 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('etapas', 'EtapasController');
     Route::resource('processos', 'ProcessosController');
     Route::resource('anexos', 'AnexosController');
+    Route::resource('mensagem', 'MensagemController');
+    Route::get('mensagem/{processo}/{etapa}', "MensagemController@createMensagem");
     Route::get('/finalizar', 'EtapasController@finalizar');
     Route::get('/download/{arquivo}/{nome}', "AnexosController@download")->name("download");
     Route::get('inicio', 'ProcessosController@start')->name('inicio');
-    Route::get('/home', 'ProcessosController@finish')->name('finish');
+    Route::get('continuar/{id}', 'ProcessosController@sequencia')->name('continuar');
+    Route::get('finish/{id}', 'ProcessosController@finish')->name('finish');
 });
